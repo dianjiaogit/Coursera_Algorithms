@@ -1,8 +1,4 @@
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import java.util.ArrayList;
-
 
 public class Percolation {
     ArrayList<ArrayList<Tuple>> Id = new ArrayList<>();
@@ -149,6 +145,7 @@ public class Percolation {
                         Integer currentSize = Size.get(a.first).get(a.last);
                         ArrayList<Integer> currentSizeRow = Size.get(a.first);
                         currentSizeRow.set(a.last, currentSize + 1);
+//                        System.out.println("LOOPING1 " + a.first + ", " + a.last + " " + currentSize);
                         Size.set(a.first, currentSizeRow);
                         a = Id.get(a.first).get(a.last);
                     }
@@ -158,24 +155,15 @@ public class Percolation {
                     SizeRow.set(a.last, 2);
                     Size.set(a.first, SizeRow);
                     Id.set(a.first, IdRow);
-//                    if (s == 0) {
-//                        s = Size.get(row - 1).get(col - 2);
-//                        a = new Tuple(row - 1, col - 2);
-//                    } else {
-//                        check = Math.min(s, Size.get(row - 1).get(col - 2));
-//                        if (check < s) {
-//                            a = new Tuple(row - 1, col - 2);
-//                            s = check;
-//                        }
-//                    }
                 }
                 if (isOpen(row, col + 1)) {
                     a = Id.get(row - 1).get(col);
-                    while (Size.get(a.first).get(a.last) != 1 && a.first != row - 1 && a.last != col - 1) {
+                    while (Size.get(a.first).get(a.last) != 1 && (a.first != row - 1 || a.last != col - 1)) {
 //                        System.out.println("LOOPING2");
                         Integer currentSize = Size.get(a.first).get(a.last);
                         ArrayList<Integer> currentSizeRow = Size.get(a.first);
                         currentSizeRow.set(a.last, currentSize + 1);
+//                        System.out.println("LOOPING2 " + a.first + ", " + a.last + " " + currentSize);
                         Size.set(a.first, currentSizeRow);
                         a = Id.get(a.first).get(a.last);
                     }
@@ -185,25 +173,16 @@ public class Percolation {
                     SizeRow.set(a.last, 2);
                     Size.set(a.first, SizeRow);
                     Id.set(a.first, IdRow);
-//                    if (s == 0) {
-//                        s = Size.get(row - 1).get(col);
-//                        a = new Tuple(row - 1, col);
-//                    } else {
-//                        check = Math.min(s, Size.get(row - 1).get(col));
-//                        if (check < s) {
-//                            a = new Tuple(row - 1, col);
-//                            s = check;
-//                        }
-//                    }
                 }
                 if (isOpen(row + 1, col)) {
                     a = Id.get(row).get(col - 1);
-                    while (Size.get(a.first).get(a.last) != 1 && a.first != row - 1 && a.last != col - 1) {
+                    while (Size.get(a.first).get(a.last) != 1 && (a.first != row - 1 || a.last != col - 1)) {
 //                        System.out.println("LOOPING3");
 //                        System.out.println(a.first + " " + a.last);
                         Integer currentSize = Size.get(a.first).get(a.last);
                         ArrayList<Integer> currentSizeRow = Size.get(a.first);
                         currentSizeRow.set(a.last, currentSize + 1);
+//                        System.out.println("LOOPING3 " + a.first + ", " + a.last + " " + currentSize);
                         Size.set(a.first, currentSizeRow);
                         a = Id.get(a.first).get(a.last);
                     }
@@ -213,24 +192,15 @@ public class Percolation {
                     SizeRow.set(a.last, 2);
                     Size.set(a.first, SizeRow);
                     Id.set(a.first, IdRow);
-//                    if (s == 0) {
-//                        s = Size.get(row).get(col - 1);
-//                        a = new Tuple(row, col - 1);
-//                    } else {
-//                        check = Math.min(s, Size.get(row).get(col - 1));
-//                        if (check < s) {
-//                            a = new Tuple(row, col - 1);
-//                            s = check;
-//                        }
-//                    }
                 }
                 if (isOpen(row - 1, col)) {
                     a = Id.get(row - 2).get(col - 1);
-                    while (Size.get(a.first).get(a.last) != 1) {
+                    while (Size.get(a.first).get(a.last) != 1 && (a.first != row - 1 || a.last != col - 1)) {
 //                        System.out.println("LOOPING4");
                         Integer currentSize = Size.get(a.first).get(a.last);
                         ArrayList<Integer> currentSizeRow = Size.get(a.first);
                         currentSizeRow.set(a.last, currentSize + 1);
+//                        System.out.println("LOOPING4 " + a.first + ", " + a.last + " " + currentSize);
                         Size.set(a.first, currentSizeRow);
                         a = Id.get(a.first).get(a.last);
                     }
@@ -240,32 +210,12 @@ public class Percolation {
                     SizeRow.set(a.last, 2);
                     Size.set(a.first, SizeRow);
                     Id.set(a.first, IdRow);
-//                    if (s == 0) {
-//                        s = Size.get(row - 2).get(col - 1);
-//                        a = new Tuple(row - 2, col - 1);
-//                    } else {
-//                        check = Math.min(s, Size.get(row - 2).get(col - 1));
-//                        if (check < s) {
-//                            a = new Tuple(row - 2, col - 1);
-//                            s = check;
-//                        }
-//                    }
                 }
                 SizeRow = Size.get(row - 1);
                 SizeRow.set(col - 1, 1);
                 Size.set(row - 1, SizeRow);
-//                if (s == 0) {
-//                    SizeRow.set(col - 1, 1);
-//                    Size.set(row - 1, SizeRow);
-//                }
-//                else {
-//                    SizeRow.set(col - 1, s + 1);
-//                    IdRow.set(col - 1, a);
-//                    Size.set(row - 1, SizeRow);
-//                    Id.set(row - 1, IdRow);
-//                }
             }
-//            System.out.println("DONE OPEN");
+//            System.out.println(Size.get(row - 1).get(col - 1));
         }
     }
 
